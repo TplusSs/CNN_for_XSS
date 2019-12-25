@@ -6,10 +6,10 @@ from keras.models import Sequential
 from keras.layers import Dense,InputLayer,Dropout,LSTM,Conv1D,Flatten,GlobalAveragePooling1D,MaxPool1D
 from keras.callbacks import TensorBoard
 from keras.optimizers import Adam
-from processing import build_dataset
+from Preprocessing_data import build_dataset
 from utils import init_session
 init_session()
-batch_size=500
+batch_size=128
 epochs_num=1
 process_datas_dir="file\\process_datas.pickle"
 log_dir="log\\Conv.log"
@@ -42,7 +42,7 @@ def train(train_generator,train_size,input_num,dims_num):
     call=TensorBoard(log_dir=log_dir,write_grads=True, write_graph=True, write_images=True)
     model.compile(optimizer,loss="categorical_crossentropy",metrics=["accuracy"])
     #model.fit_generator(train_generator,steps_per_epoch=train_size//batch_size,epochs=epochs_num,callbacks=[call])
-    model.fit_generator(train_generator, steps_per_epoch=5, epochs=5, callbacks=[call])
+    model.fit_generator(train_generator, steps_per_epoch=3, epochs=366, callbacks=[call])
     model.save(model_dir)
     end=time.time()
     print("Over train job in %f s"%(end-start))
